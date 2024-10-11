@@ -19,7 +19,7 @@ public class Validator {
                 entradaValida = true;
                 return opcion;
             } catch (InputMismatchException e) {
-                System.out.println("¡Cuidado! Solo puedes introducir números.");
+                System.out.println("¡Cuidado! Solo puedes introducir números enteros.");
                 sc.next();
             }
         } while (!entradaValida);
@@ -27,18 +27,26 @@ public class Validator {
     }
 
     public double solicitarMonto() {
-        boolean entradaValida = false;
-        double numero = 0;
+        double numero;
         do {
-            System.out.println("Introduce el monto: ");
+            numero = solicitarNumero();
+            if (numero <= 0) {
+                System.out.println("El monto debe ser mayor a 0. Por favor, inténtelo de nuevo.");
+            }
+        } while (numero <= 0);
+        return numero;
+    }
+
+    private double solicitarNumero() {
+        while (true) {
             try {
-                numero = sc.nextDouble();
-                entradaValida = true;
+                System.out.println("Introduce el monto: ");
+                double valor = sc.nextDouble();
+                return valor;
             } catch (InputMismatchException e) {
                 System.out.println("¡Cuidado! Solo puedes introducir números.");
-                sc.next();
+                sc.next(); // Limpiar el buffer del scanner
             }
-        } while (!entradaValida);
-        return numero;
+        }
     }
 }
